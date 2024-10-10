@@ -1,0 +1,36 @@
+html,body {
+   font-family: Arial, Helvetica, sans-serif;
+   font-size: large;
+   --font-color: black;
+   --bg-color: white;
+   color: var(--font-color);
+   background-color: var(--bg-color);
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   min-width: 100%;
+   min-height: 100vh;
+   margin: 0;
+}
+
+#qr-input {
+   margin: 1em;
+
+   h1 {
+      font-family: Georgia, 'Times New Roman', Times, serif;
+   }
+
+   input {
+      padding: 1em;
+      border-radius: 0.5em;
+      border: 1px solid rgba(127, 127, 127, 0.5);
+   }
+
+}
+
+#qr-code {
+   max-width: 30vw;
+   width: 80%;
+   max-height: 30vh;
+   height: 80%;
+}
