@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,12 +9,22 @@
    <script src="./qrcodegen-v1.8.0-es6.js" defer></script>
    <script src="./index.js" defer></script>
 </head>
+
 <body>
    <form id="qr-input">
       <h1>QR URL: <input id="url" type="text" name="URL"></h1>
+      <h2>Error correction level</h2>
+      <ul id="ecc-codes">
+         <li><input type="radio" name="error-correction" value="none">None</li>
+         <li><input type="radio" name="error-correction" value="light">Light</li>
+         <li><input type="radio" name="error-correction" value="medium">Medium</li>
+         <li><input type="radio" name="error-correction" value="extreme">Extreme</li>
+      </ul>
    </form>
+
    <div id="qr-code" hidden>
-      
+
    </div>
 </body>
+
 </html>
