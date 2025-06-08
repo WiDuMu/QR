@@ -1,23 +1,29 @@
+import QRCodeElement from "./QRCode";
+const QR = document.querySelector('qr-code');
+console.log(QR);
+// Base inputs
 const textInput = document.querySelector('#url');
 const fgInput = document.querySelector('#fg-color');
 const bgInput = document.querySelector('#bg-color');
+
+// Firefox likes retaining values, I don't
 fgInput.value = "#000000";
 bgInput.value = "#FFFFFF";
 textInput.value = "";
 
-textInput.addEventListener('input', e => showText(textInput.value, fgInput.value, bgInput.value));
-fgInput.addEventListener('input', e => showText(textInput.value, fgInput.value, bgInput.value));
-bgInput.addEventListener('input', e => showText(textInput.value, fgInput.value, bgInput.value));
+const onUpdate = e => QR.renderQR(textInput.value, 2, fgInput.value, bgInput.value);
+textInput.addEventListener('input', onUpdate);
+fgInput.addEventListener('input', onUpdate);
+bgInput.addEventListener('input', onUpdate);
 
-const QRC = qrcodegen.QrCode;
-const QR = document.getElementById('qr-code');
 
-function showText(text, fg, bg) {
-   qr0 = QRC.encodeText(text, QRC.Ecc.MEDIUM);
-   console.log(text)
-   QR.innerHTML = toSvgString(qr0, 2, bg ? bg : "white", fg ? fg: "black");
-   QR.toggleAttribute('hidden', false);
-}
+
+// function showText(text, fg, bg) {
+//    qr0 = QRC.encodeText(text, QRC.Ecc.MEDIUM);
+//    console.log(text)
+//    QR.innerHTML = toSvgString(qr0, 2, bg ? bg : "white", fg ? fg: "black");
+//    QR.toggleAttribute('hidden', false);
+// }
 
 	// // Draws the given QR Code, with the given module scale and border modules, onto the given HTML
 	// // canvas element. The canvas's width and height is resized to (qr.size + border * 2) * scale.

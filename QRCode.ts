@@ -1,17 +1,20 @@
-class QRCodeElement extends HTMLElement {
-	shadow;
+import { qrcodegen } from "./qrcodegen.ts";
+const QRC = qrcodegen.QrCode;
+
+export default class QRCodeElement extends HTMLElement {
+	shadow: ShadowRoot;
 
 	constructor() {
 		super();
 		this.shadow = this.attachShadow({ mode: "closed" });
 	}
 
-	renderQR(text, border, bgColor, fgColor) {
+	renderQR(text: string, border: number, fgColor: string, bgColor: string) {
 		if (border < 0) {
 			throw new RangeError("Border must be non-negative");
 		}
 		const qr = QRC.encodeText(text, QRC.Ecc.MEDIUM);
-		let parts = [];
+		const parts = [];
 		for (let y = 0; y < qr.size; y++) {
 			for (let x = 0; x < qr.size; x++) {
 				if (qr.getModule(x, y))
