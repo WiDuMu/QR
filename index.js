@@ -1,17 +1,21 @@
 const textInput = document.querySelector('#url');
+const fgInput = document.querySelector('#fg-color');
+const bgInput = document.querySelector('#bg-color');
+fgInput.value = "#000000";
+bgInput.value = "#FFFFFF";
+textInput.value = "";
 
-textInput.addEventListener('input', e => showText(e.target.value));
+textInput.addEventListener('input', e => showText(textInput.value, fgInput.value, bgInput.value));
+fgInput.addEventListener('input', e => showText(textInput.value, fgInput.value, bgInput.value));
+bgInput.addEventListener('input', e => showText(textInput.value, fgInput.value, bgInput.value));
 
 const QRC = qrcodegen.QrCode;
-let qr0 = QRC.encodeText("Hello, world!", QRC.Ecc.MEDIUM);
 const QR = document.getElementById('qr-code');
-QR.innerHTML = toSvgString(qr0, 2, "white", "black")
-QR.toggleAttribute('hidden');
 
-function showText(text) {
+function showText(text, fg, bg) {
    qr0 = QRC.encodeText(text, QRC.Ecc.MEDIUM);
    console.log(text)
-   QR.innerHTML = toSvgString(qr0, 2, "white", "black");
+   QR.innerHTML = toSvgString(qr0, 2, bg ? bg : "white", fg ? fg: "black");
    QR.toggleAttribute('hidden', false);
 }
 

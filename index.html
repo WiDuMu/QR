@@ -6,11 +6,14 @@
    <title>QR Generator</title>
    <link rel="stylesheet" href="./index.css">
    <script src="./qrcodegen-v1.8.0-es6.js" defer></script>
+   <script src="./QRCode.js"></script>
    <script src="./index.js" defer></script>
 </head>
 <body>
-   <form id="qr-input">
-      <h1>QR URL: <input id="url" type="text" name="URL"></h1>
+   <form id="qr-input" class="flex-col">
+      <h1 class="flex-row">QR URL:<input id="url" placeholder="Your link here" value="" type="text" name="URL"></h1>
+      <h1 class="flex-row">Foreground Color:<input id="fg-color" name="fg-color" value="#000000" type="color"></h1>
+      <h1 class="flex-row">Background Color:<input id="bg-color" name="bg-color" value="#FFFFFF" type="color"></h1>
    </form>
    <div id="qr-code" hidden>
       
