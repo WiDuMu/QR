@@ -82,8 +82,8 @@ html,body {
 
 .sticky-right-button {
     position: absolute;
-    bottom: 2em;
-    right: 2em;
+    bottom: 1em;
+    right: 1em;
     border: none;
     font-size: small;
     padding: 0.5em;
