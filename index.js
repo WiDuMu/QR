@@ -18,20 +18,36 @@ bgInput.addEventListener("input", (e) =>
 const QRC = qrcodegen.QrCode;
 const QR = document.getElementById("qr-code");
 const errorElement = document.getElementById("qr-code-errors");
+const QRDownload = document.getElementById("qr-download-button");
+console.log(QRDownload);
+const downloadLink = document.getElementById("secret-download-link");
+
+QRDownload.addEventListener("click", (e) => {
+	// console.log("hello");
+	const encoded = encodeSVG(textInput.value, bgInput.value, fgInput.value);
+	const blob = new File([encoded], "qr.svg", { type: "image/svg+xml"});
+	const url = URL.createObjectURL(blob);
+	downloadLink.href = url;
+	downloadLink.click();
+	URL.revokeObjectURL(url);
+});
 
 function showText(text, fg, bg) {
-	console.log(text);
+	// console.log(text);
 	errorElement.replaceChildren();
 	try {
 		qr0 = QRC.encodeText(text, QRC.Ecc.MEDIUM);
 		QR.innerHTML = toSvgString(qr0, 2, bg ? bg : "white", fg ? fg : "black");
-	   QR.toggleAttribute("hidden", false);
+		QR.toggleAttribute("hidden", false);
+		QRDownload.toggleAttribute("hidden", false);
 	} catch {
+		QR.toggleAttribute("hidden", true);
+		QRDownload.toggleAttribute("hidden", true);
 		const error = document.createElement("li");
-		error.textContent = "Error: Your text is too long to be encoded into a QR code. Please shorten it."
+		error.textContent =
+			"Error: Your text is too long to be encoded into a QR code. Please shorten it.";
 		errorElement.append(error);
 	}
-	
 }
 
 // // Draws the given QR Code, with the given module scale and border modules, onto the given HTML
@@ -53,11 +69,17 @@ function showText(text, fg, bg) {
 // 	}
 // }
 
+function encodeSVG(text, bg, fg) {
+	const binary = QRC.encodeText(text, QRC.Ecc.MEDIUM);
+	const svgText = toSvgString(binary, 2, bg ? bg : "white", fg ? fg : "black");
+	return svgText;
+}
+
 // Returns a string of SVG code for an image depicting the given QR Code, with the given number
 // of border modules. The string always uses Unix newlines (\n), regardless of the platform.
 function toSvgString(qr, border, lightColor, darkColor) {
 	if (border < 0) throw new RangeError("Border must be non-negative");
-	let parts = [];
+	const parts = [];
 	for (let y = 0; y < qr.size; y++) {
 		for (let x = 0; x < qr.size; x++) {
 			if (qr.getModule(x, y))

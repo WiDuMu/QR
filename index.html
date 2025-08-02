@@ -11,9 +11,11 @@
 </head>
 <body>
    <form id="qr-input" class="flex-col">
+      <a id="secret-download-link" download="" hidden></a>
       <h1 class="flex-row">QR URL:<input id="url" placeholder="Your link here" value="" type="text" name="URL"></h1>
       <h1 class="flex-row">Foreground Color:<input id="fg-color" name="fg-color" value="#000000" type="color"></h1>
       <h1 class="flex-row">Background Color:<input id="bg-color" name="bg-color" value="#FFFFFF" type="color"></h1>
+      <button id="qr-download-button" type="button" hidden>Download QR code</button>
       <ul id="qr-code-errors">
 
       </ul>

@@ -3,6 +3,8 @@ html,body {
    font-size: large;
    --font-color: black;
    --bg-color: white;
+   --button-color: blue;
+   --button-font-color: white;
    color: var(--font-color);
    background-color: var(--bg-color);
    --trans-gray: rgba(127, 127, 127, 0.5);
@@ -25,7 +27,6 @@ html,body {
 } */
 
 #qr-input {
-
    * {
       margin: 0.5em;
    }
@@ -56,6 +57,14 @@ html,body {
 
 #qr-code-errors {
    color: red;
+}
+
+#qr-download-button {
+   padding: 0.5em;
+   background-color: var(--button-color);
+   color: var(--button-font-color);
+   border: none;
+   border-radius: 0.25em;
 }
 
 .flex-col {
