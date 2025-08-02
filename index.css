@@ -15,17 +15,20 @@ html,body {
    min-height: 100vh;
    margin: 0;
 }
-
-@media (prefers-color-scheme: dark) {
+/* #TODO: Make this theme not suck */
+/* @media (prefers-color-scheme: dark) {
    body {
       --font-color: white;
-      --bg-color: black;
+      --bg-color: rgb(0, 0, 0);
       --stripe: none;
    }
-}
+} */
 
 #qr-input {
-   margin: 1em;
+
+   * {
+      margin: 0.5em;
+   }
 
    input[type=color] {
       padding: 0;
@@ -42,7 +45,7 @@ html,body {
 }
 
 #qr-code {
-   padding: 0.5em;
+   padding: 5px;
    border: var(--stripe);
 }
 
@@ -63,7 +66,39 @@ html,body {
 
 .flex-row {
    display: flex;
-   gap: 1em;
+   gap: 0.5em;
    flex-direction: row;
    align-items: center;
+}
+
+.sticky-right-button {
+    position: absolute;
+    bottom: 2em;
+    right: 2em;
+    border: none;
+    font-size: small;
+    padding: 0.5em;
+    border-radius: .5em;
+    aspect-ratio: 1;
+    overflow: hidden;
+    img {
+      max-height: max(5vw, 5vh);
+      height: 100%;
+      aspect-ratio: 1;
+      padding: 0.5em;
+    }
+    span {
+      color: var(--font-color);
+    }
+}
+
+.sticky-right-button:hover {
+   background-color: var(--trans-gray);
+   transition: background-color 200ms ease-in-out;
+}
+
+.flex-col-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
