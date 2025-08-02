@@ -29,12 +29,18 @@ html,body {
 }
 
 #qr-code {
-   max-width: 30vw;
-   width: 80%;
-   max-height: 30vh;
-   height: 80%;
    padding: 0.5em;
    border: 1px dashed rgba(127, 127, 127, 0.5);
+}
+
+#qr-code > svg {
+   height: 50vh;
+   aspect-ratio: 1;
+}
+
+#qr-code-errors {
+   color: red;
+   
 }
 
 .flex-col {
