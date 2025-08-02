@@ -37,7 +37,7 @@ function showText(text, fg, bg) {
 	errorElement.replaceChildren();
 	try {
 		qr0 = QRC.encodeText(text, QRC.Ecc.MEDIUM);
-		QR.innerHTML = toSvgString(qr0, 2, bg ? bg : "white", fg ? fg : "black");
+		QR.innerHTML = toSvgString2(qr0, 2, bg ? bg : "white", fg ? fg : "black");
 		QR.toggleAttribute("hidden", false);
 		QRDownload.toggleAttribute("hidden", false);
 	} catch {
@@ -91,6 +91,25 @@ function toSvgString(qr, border, lightColor, darkColor) {
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ${qr.size + border * 2} ${qr.size + border * 2}" stroke="none">
 	<rect width="100%" height="100%" fill="${lightColor}"/>
 	<path d="${parts.join(" ")}" fill="${darkColor}"/>
+</svg>
+`;
+}
+
+function toSvgString2(qr, border, lightColor, darkColor) {
+	if (border < 0) throw new RangeError("Border must be non-negative");
+	const parts = [];
+	for (let y = 0; y < qr.size; y++) {
+		for (let x = 0; x < qr.size; x++) {
+			if (qr.getModule(x, y))
+				parts.push(`<ellipse style="fill: ${darkColor};" cx=${x + border} cy=${y + border} rx="0.5px" ry="0.5px" />`);
+		}
+	}
+
+return `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ${qr.size + border * 2} ${qr.size + border * 2}" stroke="none">
+	<rect width="100%" height="100%" fill="${lightColor}"/>
+	${parts.join("")}
 </svg>
 `;
 }
