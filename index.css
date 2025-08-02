@@ -1,21 +1,22 @@
-html,body {
-   font-family: Arial, Helvetica, sans-serif;
-   font-size: large;
-   --font-color: black;
-   --bg-color: white;
-   --button-color: blue;
-   --button-font-color: white;
-   color: var(--font-color);
-   background-color: var(--bg-color);
-   --trans-gray: rgba(127, 127, 127, 0.5);
-   --input-border: 1px solid var(--trans-gray);
-   --stripe: 1px dashed var(--trans-gray);
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   min-width: 100%;
-   min-height: 100vh;
-   margin: 0;
+html,
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: large;
+	--font-color: black;
+	--bg-color: white;
+	--button-color: blue;
+	--button-font-color: white;
+	color: var(--font-color);
+	background-color: var(--bg-color);
+	--trans-gray: rgba(127, 127, 127, 0.5);
+	--input-border: 1px solid var(--trans-gray);
+	--stripe: 1px dashed var(--trans-gray);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-width: 100%;
+	min-height: 100vh;
+	margin: 0;
 }
 /* #TODO: Make this theme not suck */
 /* @media (prefers-color-scheme: dark) {
@@ -27,87 +28,86 @@ html,body {
 } */
 
 #qr-input {
-   * {
-      margin: 0.5em;
-   }
+	* {
+		margin: 0.5em;
+	}
 
-   input[type=color] {
-      padding: 0;
-      border: none;
-      border-radius: 0.25em;
-   } 
+	input[type="color"] {
+		padding: 0;
+		border: none;
+		border-radius: 0.25em;
+	}
 
-   input[type=text] {
-      padding: 0.5em;
-      border-radius: 0.5em;
-      border: var(--input-border);
-   }
-
+	input[type="text"] {
+		padding: 0.5em;
+		border-radius: 0.5em;
+		border: var(--input-border);
+	}
 }
 
 #qr-code {
-   padding: 5px;
-   border: var(--stripe);
+	padding: 5px;
+	border: var(--stripe);
 }
 
 #qr-code > svg {
-   height: 50vh;
-   aspect-ratio: 1;
+	height: 50vh;
+	aspect-ratio: 1;
 }
 
 #qr-code-errors {
-   color: red;
+	color: red;
 }
 
 #qr-download-button {
-   padding: 0.5em;
-   background-color: var(--button-color);
-   color: var(--button-font-color);
-   border: none;
-   border-radius: 0.25em;
+	padding: 0.5em;
+	background-color: var(--button-color);
+	color: var(--button-font-color);
+	border: none;
+	border-radius: 0.25em;
 }
 
 .flex-col {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .flex-row {
-   display: flex;
-   gap: 0.5em;
-   flex-direction: row;
-   align-items: center;
+	display: flex;
+	gap: 0.5em;
+	flex-direction: row;
+	align-items: center;
 }
 
 .sticky-right-button {
-    position: absolute;
-    bottom: 1em;
-    right: 1em;
-    border: none;
-    font-size: small;
-    padding: 0.5em;
-    border-radius: .5em;
-    aspect-ratio: 1;
-    overflow: hidden;
-    img {
-      max-height: max(5vw, 5vh);
-      height: 100%;
-      aspect-ratio: 1;
-      padding: 0.5em;
-    }
-    span {
-      color: var(--font-color);
-    }
+	position: absolute;
+	bottom: 1em;
+	right: 1em;
+	border: none;
+	font-size: small;
+	padding: 0.5em;
+	border-radius: 0.5em;
+	aspect-ratio: 1;
+	overflow: hidden;
+	img {
+		max-height: max(5vw, 5vh);
+		height: 100%;
+		aspect-ratio: 1;
+		padding: 0.5em;
+	}
+	span {
+		color: var(--font-color);
+	}
 }
 
 .sticky-right-button:hover {
-   background-color: var(--trans-gray);
-   transition: background-color 200ms ease-in-out;
+	background-color: var(--trans-gray);
+	transition: background-color 200ms ease-in-out;
 }
 
 .flex-col-center {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
