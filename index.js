@@ -5,15 +5,11 @@ fgInput.value = "#000000";
 bgInput.value = "#FFFFFF";
 textInput.value = "";
 
-textInput.addEventListener("input", () =>
-	showText(textInput.value, fgInput.value, bgInput.value),
-);
-fgInput.addEventListener("input", () =>
-	showText(textInput.value, fgInput.value, bgInput.value),
-);
-bgInput.addEventListener("input", () =>
-	showText(textInput.value, fgInput.value, bgInput.value),
-);
+const updateInput = () => showText(textInput.value, fgInput.value, bgInput.value);
+
+textInput.addEventListener("input", updateInput);
+fgInput.addEventListener("input", updateInput);
+bgInput.addEventListener("input", updateInput);
 
 const QRC = qrcodegen.QrCode;
 const QR = document.getElementById("qr-code");
@@ -33,7 +29,7 @@ QRDownload.addEventListener("click", () => {
 function showText(text, fg, bg) {
 	errorElement.replaceChildren();
 	try {
-		QR.innerHTML = toSvgStringCircle(text, 2, bg ? bg : "white", fg ? fg : "black");
+		QR.innerHTML = toSvgString(text, 2, bg ? bg : "white", fg ? fg : "black");
 		QR.toggleAttribute("hidden", false);
 		QRDownload.toggleAttribute("hidden", false);
 	} catch {
@@ -45,5 +41,3 @@ function showText(text, fg, bg) {
 		errorElement.append(error);
 	}
 }
-
-const canvas = document.getElementById("qr-canvas");
