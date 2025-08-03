@@ -36,7 +36,6 @@ function showText(text, fg, bg) {
 		QR.innerHTML = toSvgStringCircle(text, 2, bg ? bg : "white", fg ? fg : "black");
 		QR.toggleAttribute("hidden", false);
 		QRDownload.toggleAttribute("hidden", false);
-		drawCanvas(text, 2, 2, bg, fg, canvas);
 	} catch {
 		QR.toggleAttribute("hidden", true);
 		QRDownload.toggleAttribute("hidden", true);
