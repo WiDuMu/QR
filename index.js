@@ -37,7 +37,7 @@ function showText(text, fg, bg) {
 	errorElement.replaceChildren();
 	try {
 		qr0 = QRC.encodeText(text, QRC.Ecc.MEDIUM);
-		QR.innerHTML = toSvgString2(qr0, 2, bg ? bg : "white", fg ? fg : "black");
+		QR.innerHTML = toSvgString(qr0, 2, bg ? bg : "white", fg ? fg : "black");
 		QR.toggleAttribute("hidden", false);
 		QRDownload.toggleAttribute("hidden", false);
 	} catch {
@@ -101,7 +101,7 @@ function toSvgString2(qr, border, lightColor, darkColor) {
 	for (let y = 0; y < qr.size; y++) {
 		for (let x = 0; x < qr.size; x++) {
 			if (qr.getModule(x, y))
-				parts.push(`<ellipse style="fill: ${darkColor};" cx=${x + border} cy=${y + border} rx="0.5px" ry="0.5px" />`);
+				parts.push(`<ellipse style="fill: rgb(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255});" cx=${x + border} cy=${y + border} rx="0.5px" ry="0.5px" />`);
 		}
 	}
 
