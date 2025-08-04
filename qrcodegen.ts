@@ -1,4 +1,7 @@
 /*
+* Modified for es2020 by WiDuMu. License remains the same.
+*/
+/*
  * QR Code generator library (TypeScript)
  *
  * Copyright (c) Project Nayuki. (MIT License)

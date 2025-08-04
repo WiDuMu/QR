@@ -1,3 +1,5 @@
+import { toSvgString, toSvgStringCircle, drawCanvas } from './QRCode.js';
+
 const textInput = document.querySelector("#url");
 const fgInput = document.querySelector("#fg-color");
 const bgInput = document.querySelector("#bg-color");
@@ -11,7 +13,7 @@ textInput.addEventListener("input", updateInput);
 fgInput.addEventListener("input", updateInput);
 bgInput.addEventListener("input", updateInput);
 
-const QRC = qrcodegen.QrCode;
+// const QRC = qrcodegen.QrCode;
 const QR = document.getElementById("qr-code");
 const errorElement = document.getElementById("qr-code-errors");
 const QRDownload = document.getElementById("qr-download-button");
@@ -32,7 +34,8 @@ function showText(text, fg, bg) {
 		QR.innerHTML = toSvgString(text, 2, bg ? bg : "white", fg ? fg : "black");
 		QR.toggleAttribute("hidden", false);
 		QRDownload.toggleAttribute("hidden", false);
-	} catch {
+	} catch (e) {
+		console.log(e)
 		QR.toggleAttribute("hidden", true);
 		QRDownload.toggleAttribute("hidden", true);
 		const error = document.createElement("li");

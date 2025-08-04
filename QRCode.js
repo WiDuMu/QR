@@ -1,3 +1,5 @@
+import { QrCode, Ecc } from "./qrcodegen.js";
+
 function randRange(maximum, minimum = 0) {
    return Math.round(Math.random() * maximum) + minimum;
 }
@@ -14,8 +16,8 @@ function randRGB() {
 
 // Returns a string of SVG code for an image depicting the given QR Code, with the given number
 // of border modules. The string always uses Unix newlines (\n), regardless of the platform.
-function toSvgString(text, border, lightColor, darkColor) {
-   const qr = QRC.encodeText(text, QRC.Ecc.MEDIUM);
+export function toSvgString(text, border, lightColor, darkColor) {
+   const qr = QrCode.encodeText(text, Ecc.MEDIUM);
 	if (border < 0) throw new RangeError("Border must be non-negative");
 	const parts = [];
 	for (let y = 0; y < qr.size; y++) {
@@ -34,8 +36,8 @@ function toSvgString(text, border, lightColor, darkColor) {
 }
 
 // Returns a string of SVG code for an image depicting the given QR Code, with adorable rainbow dots
-function toSvgStringCircle(text, border, lightColor) {
-   const qr = QRC.encodeText(text, QRC.Ecc.MEDIUM);
+export function toSvgStringCircle(text, border, lightColor) {
+   const qr = QrCode.encodeText(text, Ecc.MEDIUM);
 	if (border < 0) throw new RangeError("Border must be non-negative");
 	const parts = [];
 	for (let y = 0; y < qr.size; y++) {
@@ -57,8 +59,8 @@ function toSvgStringCircle(text, border, lightColor) {
 // canvas element. The canvas's width and height is resized to (qr.size + border * 2) * scale.
 // The drawn image is purely dark and light, and fully opaque.
 // The scale must be a positive integer and the border must be a non-negative integer.
-function drawCanvas(text, scale, border, lightColor, darkColor, canvas) {
-   const qr = QRC.encodeText(text, QRC.Ecc.MEDIUM);
+export function drawCanvas(text, scale, border, lightColor, darkColor, canvas) {
+   const qr = QrCode.encodeText(text, Ecc.MEDIUM);
 	if (scale <= 0 || border < 0)
 		throw new RangeError("Value out of range");
 	const width = (qr.size + border * 2) * scale;
