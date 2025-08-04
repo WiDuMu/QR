@@ -51,8 +51,8 @@ export class QrCode {
 	// Unicode code points (not UTF-16 code units) if the low error correction level is used. The smallest possible
 	// QR Code version is automatically chosen for the output. The ECC level of the result may be higher than the
 	// ecl argument if it can be done without increasing the version.
-	public static encodeText(text: string, ecl: QrCode.Ecc): QrCode {
-		const segs: Array<QrSegment> = qrcodegen.QrSegment.makeSegments(text);
+	public static encodeText(text: string, ecl: Ecc): QrCode {
+		const segs: Array<QrSegment> = QrSegment.makeSegments(text);
 		return QrCode.encodeSegments(segs, ecl);
 	}
 
@@ -62,9 +62,9 @@ export class QrCode {
 	// The ECC level of the result may be higher than the ecl argument if it can be done without increasing the version.
 	public static encodeBinary(
 		data: Readonly<Array<byte>>,
-		ecl: QrCode.Ecc,
+		ecl: Ecc,
 	): QrCode {
-		const seg: QrSegment = qrcodegen.QrSegment.makeBytes(data);
+		const seg: QrSegment = QrSegment.makeBytes(data);
 		return QrCode.encodeSegments([seg], ecl);
 	}
 
@@ -81,7 +81,7 @@ export class QrCode {
 	// This is a mid-level API; the high-level API is encodeText() and encodeBinary().
 	public static encodeSegments(
 		segs: Readonly<Array<QrSegment>>,
-		ecl: QrCode.Ecc,
+		ecl: Ecc,
 		minVersion: int = 1,
 		maxVersion: int = 40,
 		mask: int = -1,
@@ -116,9 +116,9 @@ export class QrCode {
 
 		// Increase the error correction level while the data still fits in the current version number
 		for (const newEcl of [
-			QrCode.Ecc.MEDIUM,
-			QrCode.Ecc.QUARTILE,
-			QrCode.Ecc.HIGH,
+			Ecc.MEDIUM,
+			Ecc.QUARTILE,
+			Ecc.HIGH,
 		]) {
 			// From low to high
 			if (
@@ -193,7 +193,7 @@ export class QrCode {
 		public readonly version: int,
 
 		// The error correction level used in this QR Code.
-		public readonly errorCorrectionLevel: QrCode.Ecc,
+		public readonly errorCorrectionLevel: Ecc,
 
 		dataCodewords: Readonly<Array<byte>>,
 
@@ -376,7 +376,7 @@ export class QrCode {
 	// codewords appended to it, based on this object's version and error correction level.
 	private addEccAndInterleave(data: Readonly<Array<byte>>): Array<byte> {
 		const ver: int = this.version;
-		const ecl: QrCode.Ecc = this.errorCorrectionLevel;
+		const ecl: Ecc = this.errorCorrectionLevel;
 		if (data.length !== QrCode.getNumDataCodewords(ver, ecl))
 			throw new RangeError("Invalid argument");
 
@@ -604,7 +604,7 @@ export class QrCode {
 	// Returns the number of 8-bit data (i.e. not error correction) codewords contained in any
 	// QR Code of the given version number and error correction level, with remainder bits discarded.
 	// This stateless pure function could be implemented as a (40*4)-cell lookup table.
-	private static getNumDataCodewords(ver: int, ecl: QrCode.Ecc): int {
+	private static getNumDataCodewords(ver: int, ecl: Ecc): int {
 		return (
 			Math.floor(QrCode.getNumRawDataModules(ver) / 8) -
 			QrCode.ECC_CODEWORDS_PER_BLOCK[ecl.ordinal][ver] *
@@ -820,7 +820,7 @@ export class QrSegment {
 	public static makeBytes(data: Readonly<Array<byte>>): QrSegment {
 		const bb: Array<bit> = [];
 		for (const b of data) appendBits(b, 8, bb);
-		return new QrSegment(QrSegment.Mode.BYTE, data.length, bb);
+		return new QrSegment(Mode.BYTE, data.length, bb);
 	}
 
 	// Returns a segment representing the given string of decimal digits encoded in numeric mode.
@@ -834,7 +834,7 @@ export class QrSegment {
 			appendBits(parseInt(digits.substring(i, i + n), 10), n * 3 + 1, bb);
 			i += n;
 		}
-		return new QrSegment(QrSegment.Mode.NUMERIC, digits.length, bb);
+		return new QrSegment(Mode.NUMERIC, digits.length, bb);
 	}
 
 	// Returns a segment representing the given text string encoded in alphanumeric mode.
@@ -857,7 +857,7 @@ export class QrSegment {
 		if (i < text.length)
 			// 1 character remaining
 			appendBits(QrSegment.ALPHANUMERIC_CHARSET.indexOf(text.charAt(i)), 6, bb);
-		return new QrSegment(QrSegment.Mode.ALPHANUMERIC, text.length, bb);
+		return new QrSegment(Mode.ALPHANUMERIC, text.length, bb);
 	}
 
 	// Returns a new mutable list of zero or more segments to represent the given Unicode text string.
@@ -885,7 +885,7 @@ export class QrSegment {
 			appendBits(0b110, 3, bb);
 			appendBits(assignVal, 21, bb);
 		} else throw new RangeError("ECI assignment value out of range");
-		return new QrSegment(QrSegment.Mode.ECI, 0, bb);
+		return new QrSegment(Mode.ECI, 0, bb);
 	}
 
 	// Tests whether the given string can be encoded as a segment in numeric mode.
@@ -908,7 +908,7 @@ export class QrSegment {
 	// but the constraint isn't checked. The given bit buffer is cloned and stored.
 	public constructor(
 		// The mode indicator of this segment.
-		public readonly mode: QrSegment.Mode,
+		public readonly mode: Mode,
 
 		// The length of this segment's unencoded data. Measured in characters for
 		// numeric/alphanumeric/kanji mode, bytes for byte mode, and 0 for ECI mode.
@@ -997,8 +997,6 @@ export class Ecc {
 
 /*---- Public helper enumeration ----*/
 
-namespace qrcodegen.QrSegment {
-	type int = number;
 
 	/*
 	 * Describes how a segment's data bits are interpreted. Immutable.
@@ -1029,4 +1027,3 @@ namespace qrcodegen.QrSegment {
 			return this.numBitsCharCount[Math.floor((ver + 7) / 17)];
 		}
 	}
-}
