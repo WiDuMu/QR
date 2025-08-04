@@ -46,7 +46,6 @@ body {
 }
 
 #qr-code {
-	padding: 5px;
 	border: var(--stripe);
 }
 

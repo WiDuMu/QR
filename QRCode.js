@@ -1,4 +1,4 @@
-import { QrCode, Ecc } from "./qrcodegen.js";
+import { Ecc, QrCode } from "./qrcodegen.js";
 
 function randRange(maximum, minimum = 0) {
    return Math.round(Math.random() * maximum) + minimum;
@@ -13,6 +13,9 @@ function randRGB() {
    return RGBtoHex(randRange(255), randRange(255), randRange(255));
 }
 
+const svgHeader = width => `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ${width} ${width}" stroke="none">`;
 
 // Returns a string of SVG code for an image depicting the given QR Code, with the given number
 // of border modules. The string always uses Unix newlines (\n), regardless of the platform.
@@ -26,9 +29,7 @@ export function toSvgString(text, border, lightColor, darkColor) {
 				parts.push(`M${x + border},${y + border}h1v1h-1z`);
 		}
 	}
-	return `<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ${qr.size + border * 2} ${qr.size + border * 2}" stroke="none">
+	return `${svgHeader(qr.size + border * 2)}
 	<rect width="100%" height="100%" fill="${lightColor}"/>
 	<path d="${parts.join(" ")}" fill="${darkColor}"/>
 </svg>
@@ -46,9 +47,7 @@ export function toSvgStringCircle(text, border, lightColor) {
 				parts.push(`<ellipse style="fill: ${randRGB()}" cx=${x + border} cy=${y + border} rx="0.5px" ry="0.5px" />`);
 		}
 	}
-   return `<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ${qr.size + border * 2} ${qr.size + border * 2}" stroke="none">
+   return `${svgHeader(qr.size + border * 2)}
 	<rect width="100%" height="100%" fill="${lightColor}"/>
 	${parts.join("")}
 </svg>
