@@ -19,7 +19,7 @@ const svgHeader = width => `<?xml version="1.0" encoding="UTF-8"?>
 
 // Returns a string of SVG code for an image depicting the given QR Code, with the given number
 // of border modules. The string always uses Unix newlines (\n), regardless of the platform.
-export function toSvgString(text, border, lightColor, darkColor) {
+export function toSvgString(text, border, lightColor = "#FFFFFF", darkColor = "#000000") {
    const qr = QrCode.encodeText(text, Ecc.MEDIUM);
 	if (border < 0) throw new RangeError("Border must be non-negative");
 	const parts = [];
@@ -32,6 +32,27 @@ export function toSvgString(text, border, lightColor, darkColor) {
 	return `${svgHeader(qr.size + border * 2)}
 	<rect width="100%" height="100%" fill="${lightColor}"/>
 	<path d="${parts.join(" ")}" fill="${darkColor}"/>
+</svg>
+`;
+}
+
+// Returns a string of SVG code for an image depicting the given QR Code, with the given number
+// of border modules. The squares are rainbow
+export function toSvgStringRainbow(text, border, lightColor, darkColor) {
+   const qr = QrCode.encodeText(text, Ecc.MEDIUM);
+	if (border < 0) throw new RangeError("Border must be non-negative");
+	const parts = [];
+	for (let y = 0; y < qr.size; y++) {
+		for (let x = 0; x < qr.size; x++) {
+			if (qr.getModule(x, y))
+				parts.push(`<rect style="fill: ${randRGB()}" x=${x + border} y=${y + border} width="1" height="1"></rect>`);
+				// parts.push(`M${x + border},${y + border}h1v1h-1z`);
+		}
+	}
+	return `${svgHeader(qr.size + border * 2)}
+	<rect width="100%" height="100%" fill="${lightColor}"/>
+	${parts.join(" ")}
+	
 </svg>
 `;
 }
