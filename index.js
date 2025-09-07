@@ -19,7 +19,7 @@ const QRDownload = document.getElementById("qr-download-button");
 const downloadLink = document.getElementById("secret-download-link");
 
 QRDownload.addEventListener("click", () => {
-	const encoded = encodeSVG(textInput.value, bgInput.value, fgInput.value);
+	const encoded = toSvgString(textInput.value, 2, bgInput.value, fgInput.value);
 	const blob = new File([encoded], "qr.svg", { type: "image/svg+xml"});
 	const url = URL.createObjectURL(blob);
 	downloadLink.href = url;
@@ -30,7 +30,7 @@ QRDownload.addEventListener("click", () => {
 function showText(text, fg, bg) {
 	errorElement.replaceChildren();
 	try {
-		QR.innerHTML = toSvgStringCircle(text, 2, bg ? bg : "white", fg ? fg : "black");
+		QR.innerHTML = toSvgString(text, 2, bg ? bg : "white", fg ? fg : "black");
 		QR.toggleAttribute("hidden", false);
 		QRDownload.toggleAttribute("hidden", false);
 	} catch (e) {
