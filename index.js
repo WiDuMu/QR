@@ -1,4 +1,4 @@
-import { toSvgString, toSvgStringRainbow, toSvgStringCircle, drawCanvas, createImage } from './QRCode.js';
+import { toSvgString, toSvgStringRainbow, toSvgStringCircle, drawCanvas, createImage, createImageRainbowDots } from './QRCode.js';
 
 const textInput = document.querySelector("#url");
 const fgInput = document.querySelector("#fg-color");
@@ -22,7 +22,7 @@ QRDownload.addEventListener("click", async () => {
 	// const encoded = toSvgString(textInput.value, 2, bgInput.value, fgInput.value);
 	// const blob = new File([encoded], "qr.svg", { type: "image/svg+xml"});
 	// const url = URL.createObjectURL(blob);
-	const blob = new File([await createImage(textInput.value, 6, 2, bgInput.value, fgInput.value)], "qr.png", {type: "image/png"});
+	const blob = new File([await createImageRainbowDots(textInput.value, 16, 2, bgInput.value, fgInput.value)], "qr.png", {type: "image/png"});
 	const url = URL.createObjectURL(blob);
 	downloadLink.href = url;
 	downloadLink.click();

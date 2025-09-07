@@ -79,35 +79,62 @@ export function toSvgStringCircle(text, border, lightColor) {
 `;
 }
 
-// Draws the given QR Code, with the given module scale and border modules, onto the given HTML
-// canvas element. The canvas's width and height is resized to (qr.size + border * 2) * scale.
-// The drawn image is purely dark and light, and fully opaque.
-// The scale must be a positive integer and the border must be a non-negative integer.
-export function drawCanvas(text, scale, border, lightColor, darkColor, canvas) {
-   const qr = QrCode.encodeText(text, Ecc.MEDIUM);
-	if (scale <= 0 || border < 0)
-		throw new RangeError("Value out of range");
-	const width = (qr.size + border * 2) * scale;
-	canvas.width = width;
-	canvas.height = width;
-	const ctx = canvas.getContext("2d");
-	for (let y = -border; y < qr.size + border; y++) {
-		for (let x = -border; x < qr.size + border; x++) {
-			ctx.fillStyle = qr.getModule(x, y) ? darkColor : lightColor;
-			ctx.fillRect((x + border) * scale, (y + border) * scale, scale, scale);
-		}
-	}
-}
-
-export async function createImage(text, scale = 10, border = 2, lightColor = "#FFFFFF", darkColor = "#000000") {
+/**
+ * Creates a PNG image by to export
+ * @param {string} text 
+ * @param {number} scale 
+ * @param {number} border 
+ * @param {string} lightColor 
+ * @param {string} darkColor 
+ * @param {"image/png" | "image/jpeg" | "image/webp"} imageType Only image/png is fully supported
+ * @returns {Promise<Blob>} A blob representing the generated image
+ */
+export async function createImage(text, scale, border, lightColor, darkColor, imageType = "image/png") {
 	if (!OffscreenCanvas) {
 		throw new Error("Offscreencanvas not supported! Exiting.")
-		return;
+	}
+	const canvas = new OffscreenCanvas(dimensions, dimensions);
+	drawCanvas(canvas, text, scale, border, lightColor, darkColor);
+	return await canvas.convertToBlob({ type: imageType });
+}
+
+/**
+ * Creates a PNG image by to export
+ * @param {string} text 
+ * @param {number} scale 
+ * @param {number} border 
+ * @param {string} lightColor 
+ * @param {string} darkColor 
+ * @param {"image/png" | "image/jpeg" | "image/webp"} imageType Only image/png is fully supported
+ * @returns {Promise<Blob>} A blob representing the generated image
+ */
+export async function createImageRainbowDots(text, scale, border, lightColor, darkColor, imageType = "image/png") {
+	if (!OffscreenCanvas) {
+		throw new Error("Offscreencanvas not supported! Exiting.")
 	}
 	const qr = QrCode.encodeText(text, Ecc.MEDIUM);
-	console.log(qr.size, border, scale);
 	const dimensions = (qr.size + (border * 2)) * scale;
 	const canvas = new OffscreenCanvas(dimensions, dimensions);
+	drawCanvasRainbowDots(canvas, text, scale, border, lightColor, darkColor);
+	return await canvas.convertToBlob({ type: imageType });
+}
+
+
+/**
+ * Draws a QR code onto the canvas of choice
+ * @param {HTMLCanvasElement | OffscreenCanvas} canvas 
+ * @param {string} text 
+ * @param {number} scale 
+ * @param {number} border 
+ * @param {string} lightColor 
+ * @param {string} darkColor 
+ */
+export function drawCanvas(canvas, text, scale = 10, border = 2, lightColor = "#FFFFFF", darkColor = "#000000") {
+	if (scale < 1 || border < 0) {
+		throw new RangeError("Invalid border or scale!");
+	}
+	const qr = QrCode.encodeText(text, Ecc.MEDIUM);
+	const dimensions = (qr.size + (border * 2)) * scale;
 	const ctx = canvas.getContext("2d");
 	if (!ctx) {
 		throw new Error("Unable to obtain canvas context. Exiting.")
@@ -122,5 +149,42 @@ export async function createImage(text, scale = 10, border = 2, lightColor = "#F
 			}
 		}
 	}
-	return await canvas.convertToBlob({ type: "image/png" });
+}
+
+/**
+ * Draws a QR code onto the canvas of choice
+ * @param {HTMLCanvasElement | OffscreenCanvas} canvas 
+ * @param {string} text 
+ * @param {number} scale 
+ * @param {number} border 
+ * @param {string} lightColor 
+ * @param {string} darkColor 
+ */
+export function drawCanvasRainbowDots(canvas, text, scale = 10, border = 2, lightColor = "#FFFFFF", darkColor = "#000000") {
+	if (scale < 1 || border < 0) {
+		throw new RangeError("Invalid border or scale!");
+	}
+	const qr = QrCode.encodeText(text, Ecc.MEDIUM);
+	const dimensions = (qr.size + (border * 2)) * scale;
+	const ctx = canvas.getContext("2d");
+	if (!ctx) {
+		throw new Error("Unable to obtain canvas context. Exiting.")
+	}
+	ctx.fillStyle = lightColor;
+	ctx.fillRect(0,0,dimensions,dimensions);
+	ctx.fillStyle = darkColor;
+	for (let y = 0; y < qr.size; y++) {
+		for (let x = 0; x < qr.size; x++) {
+			if (qr.getModule(x, y)) {
+				const color = randRGB();
+				ctx.fillStyle = color;
+				ctx.strokeStyle = color;
+				console.log(ctx.fillStyle);
+				ctx.beginPath();
+				ctx.ellipse((x + border) * scale, (y + border) * scale, scale / 2, scale / 2, 0, 0, 2 * Math.PI);
+				ctx.fill();
+				ctx.stroke();
+			}
+		}
+	}
 }
