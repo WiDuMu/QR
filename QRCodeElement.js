@@ -13,7 +13,6 @@ class QRCodeElement extends HTMLElement {
    }
 
    render() {
-      console.log("rendering!");
       const foreground = this.getAttribute("data-foreground");
       const background = this.getAttribute("data-background");
       const border = this.getAttribute("data-border");
@@ -27,8 +26,6 @@ class QRCodeElement extends HTMLElement {
       if (!url) {this.hidden = true; return;} else {this.toggleAttribute("hidden", false)}
 
       const svg = toSvgString(url, border ? border : 0, foreground ? foreground : undefined, background ? background : undefined);
-
-      console.log(svg);
 
       this.shadow.innerHTML = `${cssSizing}${svg}`;
    }
@@ -44,7 +41,6 @@ class QRCodeElement extends HTMLElement {
     * @param {string} newValue new attribute value
     */
    attributeChangedCallback(name, oldValue, newValue) {
-      console.log("attributechanged");
       if (name === "data-url") {
          console.log(`QR code changed: ${oldValue} -> ${newValue}`);
       }
