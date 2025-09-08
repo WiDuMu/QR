@@ -1,10 +1,11 @@
 import { Ecc, QrCode } from "./qrcodegen.js";
 
+// Utility functions
+
 function randRange(maximum, minimum = 0) {
    return Math.round(Math.random() * maximum) + minimum;
 }
 
-// Utility functions
 function RGBtoHex(r, g, b) {
    return `#${r.toString(16)}${g.toString(16)}${b.toString(16)}`;
 }
@@ -17,10 +18,7 @@ const svgHeader = width => `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ${width} ${width}" stroke="none">`;
 
-function toPixelGrid(text, border, ecc = Ecc.MEDIUM) {
-	const qr = QrCode.encodeText(text, ecc);
-	return qr.modules;
-}
+const TAU = Math.PI * 2;
 
 // Returns a string of SVG code for an image depicting the given QR Code, with the given number
 // of border modules. The string always uses Unix newlines (\n), regardless of the platform.
@@ -56,7 +54,6 @@ export function toSvgStringRainbow(text, border, lightColor, darkColor) {
 	return `${svgHeader(qr.size + border * 2)}
 	<rect width="100%" height="100%" fill="${lightColor}"/>
 	${parts.join(" ")}
-	
 </svg>
 `;
 }
@@ -93,6 +90,8 @@ export async function createImage(text, scale, border, lightColor, darkColor, im
 	if (!OffscreenCanvas) {
 		throw new Error("Offscreencanvas not supported! Exiting.")
 	}
+	const qr = QrCode.encodeText(text, Ecc.MEDIUM);
+	const dimensions = (qr.size + (border * 2)) * scale;
 	const canvas = new OffscreenCanvas(dimensions, dimensions);
 	drawCanvas(canvas, text, scale, border, lightColor, darkColor);
 	return await canvas.convertToBlob({ type: imageType });
@@ -181,10 +180,12 @@ export function drawCanvasRainbowDots(canvas, text, scale = 10, border = 2, ligh
 				ctx.strokeStyle = color;
 				console.log(ctx.fillStyle);
 				ctx.beginPath();
-				ctx.ellipse((x + border) * scale, (y + border) * scale, scale / 2, scale / 2, 0, 0, 2 * Math.PI);
+				ctx.ellipse((x + border) * scale, (y + border) * scale, scale / 2, scale / 2, 0, 0, TAU);
 				ctx.fill();
 				ctx.stroke();
 			}
 		}
 	}
 }
+
+Math.TAU = Math.PI * 2;

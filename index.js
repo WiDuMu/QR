@@ -22,7 +22,7 @@ QRDownload.addEventListener("click", async () => {
 	// const encoded = toSvgString(textInput.value, 2, bgInput.value, fgInput.value);
 	// const blob = new File([encoded], "qr.svg", { type: "image/svg+xml"});
 	// const url = URL.createObjectURL(blob);
-	const blob = new File([await createImageRainbowDots(textInput.value, 16, 2, bgInput.value, fgInput.value)], "qr.png", {type: "image/png"});
+	const blob = new File([await createImage(textInput.value, 16, 2, bgInput.value, fgInput.value)], "qr.png", {type: "image/png"});
 	const url = URL.createObjectURL(blob);
 	downloadLink.href = url;
 	downloadLink.click();
@@ -36,7 +36,7 @@ function showText(text, fg, bg) {
 		QR.toggleAttribute("hidden", false);
 		QRDownload.toggleAttribute("hidden", false);
 	} catch (e) {
-		console.log(e)
+		console.error(e)
 		QR.toggleAttribute("hidden", true);
 		QRDownload.toggleAttribute("hidden", true);
 		const error = document.createElement("li");

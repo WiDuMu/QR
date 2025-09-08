@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,30 +11,34 @@
    <script type="module" src="./index.js"></script>
    <script type="module" src="./QRCodeElement.js"></script>
 </head>
-<body>
-   <form id="qr-input" class="flex-col">
-      <a id="secret-download-link" download="" hidden></a>
-      <h1 class="flex-row">QR URL:<input id="url" placeholder="Your link here" value="" type="text" name="URL"></h1>
-      <h1 class="flex-row">Foreground Color:<input id="fg-color" name="fg-color" value="#000000" type="color"></h1>
-      <h1 class="flex-row">Background Color:<input id="bg-color" name="bg-color" value="#FFFFFF" type="color"></h1>
-      <h1 class="flex-row">Style:
-         <select id="qr-style" value="qr-style">
-            <option value="normal">Regular</option>
-            <option value="rainbow">Rainbow</option>
-            <option value="circle">Circle</option>
-            <option value="rainbow-circle">Rainbow circle</option>
-         </select>
-      </h1>
-      <button id="qr-download-button" type="button" hidden>Download QR code</button>
-      <ul id="qr-code-errors">
 
-      </ul>
+<body class="flex-col-center">
+   <form id="qr-input" class="flex-col-center">
+      <div class="space">
+         <a id="secret-download-link" download="" hidden></a>
+         <h1 class="flex-row">QR URL:<input id="url" placeholder="Your link here" value="" type="text" name="URL"></h1>
+         <h1 class="flex-row">Foreground Color:<input id="fg-color" name="fg-color" value="#000000" type="color"></h1>
+         <h1 class="flex-row">Background Color:<input id="bg-color" name="bg-color" value="#FFFFFF" type="color"></h1>
+         <!-- <h1 class="flex-row">Style:
+            <select id="qr-style" value="qr-style">
+               <option value="normal">Regular</option>
+               <option value="rainbow">Rainbow</option>
+               <option value="circle">Circle</option>
+               <option value="rainbow-circle">Rainbow circle</option>
+            </select>
+         </h1> -->
+         <ul id="qr-code-errors">
+
+         </ul>
+      </div>
+      <button id="qr-download-button" type="button" hidden>Download QR code</button>
    </form>
+   
    <div id="qr-code" hidden>
-      
    </div>
    <qr-code id="wc" data-url="hello"></qr-code>
    <a href="https://github.com/WiDuMu/QR" class="sticky-right-button flex-col-center"><img alt="github link"
-        src="static/github-mark.svg"><span>github.com/WiDuMu</span></a>
+         src="static/github-mark.svg"><span>github.com/WiDuMu</span></a>
 </body>
+
 </html>
