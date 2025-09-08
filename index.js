@@ -1,4 +1,4 @@
-import { toSvgString, toSvgStringRainbow, toSvgStringCircle, drawCanvas, createImage, createImageRainbowDots } from './QRCode.js';
+import { toSvgString, createImage } from './QRCode.js';
 
 const textInput = document.querySelector("#url");
 const fgInput = document.querySelector("#fg-color");
