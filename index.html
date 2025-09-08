@@ -5,20 +5,24 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>QR Generator</title>
-   <meta name="description">A client-side QR code generator in Javascript.</head>
-   <link rel="stylesheet" href="./index.css">
-   <script type="module" src="./QRCode.js"></script>
-   <script type="module" src="./index.js"></script>
-   <script type="module" src="./QRCodeElement.js"></script>
+   <meta name="description" content="A client-side QR code generator in Javascript.">
+</head>
+<link rel="stylesheet" href="./index.css">
+<script type="module" src="./QRCode.js"></script>
+<script type="module" src="./index.js"></script>
+<script type="module" src="./QRCodeElement.js"></script>
 </head>
 
 <body class="flex-col-center">
    <form id="qr-input" class="flex-col-center">
       <div class="space">
          <a id="secret-download-link" download="" hidden></a>
-         <h1 class="flex-row"><label for="url">QR URL:<input id="url" placeholder="Your link here" value="" type="text" name="URL"></label></h1>
-         <h1 class="flex-row"><label for="fg-color">Foreground Color:<input id="fg-color" name="fg-color" value="#000000" type="color"></label></h1>
-         <h1 class="flex-row"><label for="bg-color">Background Color:<input id="bg-color" name="bg-color" value="#FFFFFF" type="color"></label></h1>
+         <h1 class="flex-row"><label for="url">QR URL:<input id="url" placeholder="Your link here" value="" type="text"
+                  name="URL"></label></h1>
+         <h1 class="flex-row"><label for="fg-color">Foreground Color:<input id="fg-color" name="fg-color"
+                  value="#000000" type="color"></label></h1>
+         <h1 class="flex-row"><label for="bg-color">Background Color:<input id="bg-color" name="bg-color"
+                  value="#FFFFFF" type="color"></label></h1>
          <!-- <h1 class="flex-row">Style:
             <select id="qr-style" value="qr-style">
                <option value="normal">Regular</option>
@@ -33,7 +37,7 @@
       </div>
       <button id="qr-download-button" type="button" hidden>Download QR code</button>
    </form>
-   
+
    <div id="qr-code" hidden>
    </div>
    <qr-code id="wc" data-url="hello"></qr-code>
