@@ -5,8 +5,8 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>QR Generator</title>
+   <meta name="description">A client-side QR code generator in Javascript.</head>
    <link rel="stylesheet" href="./index.css">
-   <!-- <script src="./qrcodegen-v1.8.0-es6.js" defer></script> -->
    <script type="module" src="./QRCode.js"></script>
    <script type="module" src="./index.js"></script>
    <script type="module" src="./QRCodeElement.js"></script>
@@ -16,9 +16,9 @@
    <form id="qr-input" class="flex-col-center">
       <div class="space">
          <a id="secret-download-link" download="" hidden></a>
-         <h1 class="flex-row">QR URL:<input id="url" placeholder="Your link here" value="" type="text" name="URL"></h1>
-         <h1 class="flex-row">Foreground Color:<input id="fg-color" name="fg-color" value="#000000" type="color"></h1>
-         <h1 class="flex-row">Background Color:<input id="bg-color" name="bg-color" value="#FFFFFF" type="color"></h1>
+         <h1 class="flex-row"><label for="url">QR URL:<input id="url" placeholder="Your link here" value="" type="text" name="URL"></label></h1>
+         <h1 class="flex-row"><label for="fg-color">Foreground Color:<input id="fg-color" name="fg-color" value="#000000" type="color"></label></h1>
+         <h1 class="flex-row"><label for="bg-color">Background Color:<input id="bg-color" name="bg-color" value="#FFFFFF" type="color"></label></h1>
          <!-- <h1 class="flex-row">Style:
             <select id="qr-style" value="qr-style">
                <option value="normal">Regular</option>
