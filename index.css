@@ -29,7 +29,7 @@ body {
 
 #qr-input {
 	* {
-		margin: 0.5em;
+		margin: 0;
 	}
 
 	input[type="color"] {
@@ -60,6 +60,7 @@ body {
 
 #qr-download-button {
 	padding: 0.5em;
+	margin: 0.5em;
 	background-color: var(--button-color);
 	color: var(--button-font-color);
 	border: none;
@@ -109,4 +110,9 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+}
+
+.space > * {
+	display: flex;
+	justify-content: space-between;
 }
